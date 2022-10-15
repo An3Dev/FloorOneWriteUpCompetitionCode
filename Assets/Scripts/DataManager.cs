@@ -45,10 +45,10 @@ public class DataManager : MonoBehaviour
         {
             return;
         }
-        foreach (var item in people)
-        {
-            print(item.ToString());
-        }
+        //foreach (var item in people)
+        //{
+        //    print(item.ToString());
+        //}
     }
 
     public void AddPerson(string name)
@@ -62,7 +62,7 @@ public class DataManager : MonoBehaviour
     public void AddReason(Person target, string newReason)
     {
         target.AddStrike(newReason);
-        print("strikes: " + target.reasonsForStrike[0]);
+        //print("strikes: " + target.reasonsForStrike[0]);
         // upload user data to playfab
         SetUserData();
     }
@@ -106,8 +106,8 @@ public class DataManager : MonoBehaviour
         //    dict.Add(player, "{}");
         //}
         string json = JsonConvert.SerializeObject(people);
-        print("person: " + people[0].name);
-        print("JSON: " + json);
+        //print("person: " + people[0].name);
+        //print("JSON: " + json);
         dict.Add(Key, json);
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
         {
@@ -116,7 +116,7 @@ public class DataManager : MonoBehaviour
         result => Debug.Log("Successfully updated user data"),
         error =>
         {
-            Debug.Log("Got error uploading user data");
+            //Debug.Log("Got error uploading user data");
             Debug.Log(error.GenerateErrorReport());
         });
     }
@@ -129,7 +129,7 @@ public class DataManager : MonoBehaviour
             Keys = null
         }, result =>
         {
-            Debug.Log("Got user data:");
+            //Debug.Log("Got user data:");
             if (!result.Data.ContainsKey(Key))
             {
                 return;
@@ -142,10 +142,10 @@ public class DataManager : MonoBehaviour
                 people = JsonConvert.DeserializeObject<List<Person>>(json);
             }
 
-            foreach(var item in people)
-            {
-                print(item.name);
-            }
+            //foreach(var item in people)
+            //{
+            //    print(item.name);
+            //}
             //foreach (string player in Data.People)
             //{a
             //    print(result.Data[player].Value);
@@ -154,7 +154,7 @@ public class DataManager : MonoBehaviour
             //else Debug.Log("Ancestor: " + result.Data["Ancestor"].Value);
         }, (error) =>
         {
-            Debug.Log("Got error retrieving user data:");
+            //Debug.Log("Got error retrieving user data:");
             Debug.Log(error.GenerateErrorReport());
         });
     }

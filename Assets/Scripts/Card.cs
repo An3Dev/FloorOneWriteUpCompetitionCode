@@ -8,6 +8,7 @@ public class Card : MonoBehaviour
     public TextMeshProUGUI username, placement, strikes;
 
     public Transform reasonsContainer;
+    public GameObject reasonsTitleText;
     public GameObject reasonTextPrefab;
 
     private Person person;
@@ -32,7 +33,12 @@ public class Card : MonoBehaviour
 
     public void SetPlacement(int placement)
     {
-        this.placement.text = placement.ToString();
+        this.placement.text = (placement + 1).ToString();
+    }
+
+    public Person GetPerson()
+    {
+        return person;
     }
 
     public void SetStrikes(int strikes)
@@ -48,12 +54,42 @@ public class Card : MonoBehaviour
         }
     }
 
+    public void SetReasons(List<string> reasons)
+    {
+        PopulateReasonsContainer(reasons);
+    }
+
     void PopulateReasonsContainer(List<string> reasons)
     {
-        foreach(string reason in reasons)
+        string s = "";
+        reasonsTitleText.SetActive(true);
+        if (reasons.Count > 0)
         {
-            Instantiate(reasonTextPrefab, reasonsContainer).GetComponent<TextMeshProUGUI>().text = reason;
+            foreach (string reason in reasons)
+            {
+                s += reason + ", ";
+            }
+            s = s.Substring(0, s.Length - 2); // remove the last comma
         }
-        print("Populated reasons");
+        else
+        {
+            reasonsTitleText.SetActive(false);
+
+            s = "Has no strikes";
+        }
+
+        if (reasonsContainer.childCount > 0)
+        {
+            reasonsContainer.GetChild(0).GetComponent<TextMeshProUGUI>().text = s;
+        }
+        else
+        {
+            Instantiate(reasonTextPrefab, reasonsContainer).GetComponent<TextMeshProUGUI>().text = s;
+        }
+        //foreach(string reason in reasons)
+        //{
+        //    Instantiate(reasonTextPrefab, reasonsContainer).GetComponent<TextMeshProUGUI>().text = reason;
+        //}
+        //print("Populated reasons");
     }
 }
